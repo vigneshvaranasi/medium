@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import { useAuth } from '../hooks/useAuth'
 
 function Home () {
+  const {authStatus} = useAuth()
   return (
     <div className='bg-[#f7f4ed]'>
       <Navbar />
@@ -11,7 +13,9 @@ function Home () {
             Human stories & ideas
           </h1>
           <p className='text-xl'>A place to read, write, and deepen your understanding</p>
-          <Link to={'/signup'} className='bg-black text-white rounded-full py-1.5 mt-10 text-md w-max px-6 md:text-xl'>Start reading</Link >
+          <Link to={
+            authStatus ? '/blogs' : '/signup'
+          } className='bg-black text-white rounded-full py-1.5 mt-10 text-md w-max px-6 md:text-xl'>Start reading</Link >
         </div>
       </div>
     </div>

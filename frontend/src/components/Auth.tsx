@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
+import { useAuth } from '../hooks/useAuth'
 
 interface LabeledInputProps {
   label: string
@@ -45,6 +46,7 @@ function Auth ({ type }: AuthProps) {
     password: ''
   })
     const navigate = useNavigate()
+    const {setUser,setAuthStatus} = useAuth()
 
   async function handleSubmit () {
     console.log(signInInput)
@@ -55,9 +57,12 @@ function Auth ({ type }: AuthProps) {
             password: signInInput.password
         })
         console.log('res: ', res);
-        const jwt = res.data.jwt
-        localStorage.setItem('jwt', jwt)
-        console.log('Authentication successful:', jwt)
+        const user = res.data.user
+        console.log('user: ', user);
+        localStorage.setItem('jwt', user.token)
+        localStorage.setItem('user', JSON.stringify(user))
+        setUser(user)
+        setAuthStatus(true)
         navigate('/blogs')
     }
     catch (e){

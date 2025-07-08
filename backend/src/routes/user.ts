@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import bcrypt from 'bcryptjs'
-import { jwt, sign } from 'hono/jwt'
+import { jwt, sign,verify } from 'hono/jwt'
 const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string
@@ -16,14 +16,14 @@ userRouter.post('/signup', async c => {
     }).$extends(withAccelerate())
 
     const body = await c.req.json()
-    if (!body.email || !body.password) {
-        return c.json({ error: 'Email and password are required' })
+    if (!body.email || !body.password || !body.name) {
+        return c.json({ error: 'Name, Email and password are required' })
     }
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
         where: {
-        email: body.email
+            email: body.email
         }
     })
     if (existingUser) {
@@ -44,7 +44,13 @@ userRouter.post('/signup', async c => {
     console.log('user: ', user)
     return c.json({
         message: 'User created successfully',
-        jwt: jwtToken
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            token: jwtToken,
+            avatarLetter: user.name.charAt(0).toUpperCase()
+        }
     })
 })
 
@@ -80,7 +86,49 @@ userRouter.post('/signin', async c => {
     console.log('user: ', user)
     return c.json({
         message: 'User signed in successfully',
-        jwt: jwtToken
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            token: jwtToken,
+            avatarLetter: user.name.charAt(0).toUpperCase()
+        }
     })
+})
+
+userRouter.get('/verify',async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate())
+
+    const token = c.req.query('token')
+    if (!token) {
+        return c.json({ error: 'Token is required' })
+    }
+
+    try {
+        const decoded = await verify(token, c.env.JWT_SECRET)
+        const user = await prisma.user.findUnique({
+            where: {
+                id: (decoded as { id: string }).id
+            }
+        })
+        if (!user) {
+            return c.json({ error: 'User not found' })
+        }
+        return c.json({
+            message: 'User verified successfully',
+            user: {
+                id: user.id,
+                name: user.name,
+                token: token,
+                email: user.email,
+                avatarLetter: user.name.charAt(0).toUpperCase()
+            }
+        })
+    } catch (error) {
+        return c.json({ error: 'Invalid token' })
+    }
+
 })
 export default userRouter
