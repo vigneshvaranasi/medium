@@ -9,4 +9,5 @@
 6. Add Skeleton -> Done
 7. Profile Page
 8. Local Blog Cache
-9. Add New Blog Page
+9. Add New Blog Page -> Done
+10. Add toast

@@ -57,7 +57,7 @@ function Blog () {
     <div>
       <Navbar />
       <div className='grid grid-cols-12 px-6 lg:px-12 mt-10 gap-4'>
-        <div className='notosans mx-auto col-span-12 lg:col-span-8'>
+        <div className='notosans col-span-12 lg:col-span-8'>
           <h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
           <p className='text-xs text-[#797979] my-2'>
             Posted on {formatDate(blog.publishedDate)}

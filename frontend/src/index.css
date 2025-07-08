@@ -11,3 +11,6 @@
 .playfair {
   font-family: "Playfair Display", serif;
 }
+textarea::-webkit-scrollbar {
+  display: none;
+}

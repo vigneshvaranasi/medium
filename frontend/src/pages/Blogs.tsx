@@ -13,21 +13,13 @@ function BlogCardSkeleton () {
           <div className='h-2.5 bg-gray-200 rounded-full w-20 md:w-50 mb-4'></div>
           <div className='h-2.5 bg-gray-200 rounded-full w-20 md:w-50 mb-4'></div>
           <div className={`flex flex-col justify-center`}>
-            <p className='text-[#797979] text-sm'>
-              <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
-            </p>
+            <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
           </div>
         </div>
         <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
-        <p className='text-md text-[#6b6b6b] text-md'>
-          <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
-        </p>
-        <p className='text-md text-[#6b6b6b] text-md'>
-          <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
-        </p>
-        <p className='text-xs text-[#797979]'>
-          <div className='h-2 bg-gray-200 rounded-full w-50'></div>
-        </p>
+        <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
+        <div className='h-2.5 bg-gray-200 rounded-full w-full mb-4'></div>
+        <div className='h-2 bg-gray-200 rounded-full w-50'></div>
       </div>
     </div>
   )
@@ -39,10 +31,10 @@ function Blogs () {
     return (
       <div>
         <Navbar />
-        <BlogCardSkeleton/>
-        <BlogCardSkeleton/>
-        <BlogCardSkeleton/>
-        <BlogCardSkeleton/>
+        <BlogCardSkeleton />
+        <BlogCardSkeleton />
+        <BlogCardSkeleton />
+        <BlogCardSkeleton />
       </div>
     )
   }

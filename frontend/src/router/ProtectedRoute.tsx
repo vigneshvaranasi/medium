@@ -5,8 +5,8 @@ import { useAuth } from '../hooks/useAuth'
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { authStatus,loading } = useAuth()
   if(loading){
-    return <div>
-        Loading....
+    return <div className='flex text-3xl justify-center items-center h-screen'>
+        Authenticating...
     </div>
   }
   if (!authStatus) {
