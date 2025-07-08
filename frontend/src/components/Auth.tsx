@@ -58,7 +58,7 @@ function Auth ({ type }: AuthProps) {
         const jwt = res.data.jwt
         localStorage.setItem('jwt', jwt)
         console.log('Authentication successful:', jwt)
-        navigate('/blog')
+        navigate('/blogs')
     }
     catch (e){
         console.error('Error during authentication:', e)
