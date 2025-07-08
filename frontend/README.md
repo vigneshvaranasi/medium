@@ -5,8 +5,8 @@
 2. Add Publish date to BE -> Done
 3. Add Landing Page -> Done
 4. Make Date Display in specific Format -> Done
-5. Make Avatar More Proper
-6. Add Skeleton
+5. Make Avatar More Proper -> Done
+6. Add Skeleton -> Done
 7. Profile Page
 8. Local Blog Cache
 9. Add New Blog Page

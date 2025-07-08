@@ -3,6 +3,8 @@ import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useAuth } from '../hooks/useAuth'
+import mediumLogo from '../assets/mediumLogo.png'
+
 
 interface LabeledInputProps {
   label: string
@@ -72,6 +74,9 @@ function Auth ({ type }: AuthProps) {
 
   return (
     <div className='h-screen flex justify-center flex-col'>
+      <Link to={'/'} className='w-max flex mx-auto mb-10'>
+        <img src={mediumLogo} alt='medium-logo' className='w-34' />
+      </Link>
       <div className='flex justify-center flex-col'>
         <div className='text-center px-10'>
           <h1 className='text-4xl font-bold'>{

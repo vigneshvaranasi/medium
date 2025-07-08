@@ -10,20 +10,15 @@ interface BlogCardProps {
 }
 
 export function Avatar ({
-  authorName,
-  size = 5
+  authorName
 }: {
   authorName: string
   size?: number
 }) {
   return (
-    <div
-      className={`bg-[#797979] rounded-full p-1 w-${size} h-${size} flex items-center justify-center`}
-    >
-      <span className='text-white text-sm'>
-        {authorName.charAt(0).toUpperCase()}
-      </span>
-    </div>
+    <p className={`bg-[#797979] rounded-full px-2.5 py-1 text-white text-sm font-semibold`}>
+      {authorName.charAt(0).toUpperCase()}
+    </p>
   )
 }
 
@@ -39,7 +34,7 @@ function BlogCard ({
       <div className='notosans border-b border-[#dfdfdf] p-4 w-screen max-w-screen-sm'>
         <div className='flex gap-1 text-lg'>
           <div className={`flex flex-col justify-center mt-0.5`}>
-            <Avatar authorName={authorName} size={4} />
+            <Avatar authorName={authorName}/>
           </div>
           <h1>{authorName}</h1>
           <div className={`flex flex-col justify-center`}>
@@ -47,9 +42,7 @@ function BlogCard ({
           </div>
           <div className={`flex flex-col justify-center`}>
             <p className='text-[#797979] text-sm'>
-              {
-                formatDate(publishedDate)
-              }
+              {formatDate(publishedDate)}
             </p>
           </div>
         </div>

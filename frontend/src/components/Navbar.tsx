@@ -19,7 +19,7 @@ function Navbar () {
           >
             New Blog
           </Link>
-          <Avatar authorName='Vignesh Varanasi' size={8} />
+          <Avatar authorName='Vignesh Varanasi'/>
         </div>
       }
     </div>

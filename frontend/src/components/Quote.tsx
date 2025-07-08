@@ -1,6 +1,6 @@
 function Quote () {
   return (
-    <div className='bg-[#f3f5f7] h-screen flex justify-center flex-col'>
+    <div className='bg-white h-screen flex justify-center flex-col'>
       <div className='flex justify-center'>
         <div className='max-w-lg'>
           <h1 className='text-3xl text-justify font-semibold mb-4'>
