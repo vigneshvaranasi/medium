@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const response = await axios.get(`${BACKEND_URL}/user/verify?token=${jwt}`)
-      console.log('response: ', response);
+      // console.log('response: ', response);
       setAuthStatus(true)
       setUser(response.data.user)
     } catch (error) {

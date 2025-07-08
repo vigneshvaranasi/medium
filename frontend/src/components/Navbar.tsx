@@ -6,7 +6,7 @@ function Navbar () {
   const { authStatus } = useAuth()
   // console.log('authStatus: ', authStatus);
   return (
-    <div className='flex justify-between items-center py-5 px-10 border-b-2 border-[#dfdfdf]'>
+    <div className='flex justify-between items-center py-5 px-6 lg:px-10 border-b-2 border-[#dfdfdf]'>
       <Link to={'/'}>
         <img src={mediumLogo} alt='medium-logo' className='w-30' />
       </Link>

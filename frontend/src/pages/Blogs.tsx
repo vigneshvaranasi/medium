@@ -22,7 +22,7 @@ function Blogs () {
                 }
                 title={blog.title}
                 content={blog.content}
-                publishedDate={"2023-10-01T12:00:00Z"}
+                publishedDate={blog.publishedDate}
               />
             ))
           }

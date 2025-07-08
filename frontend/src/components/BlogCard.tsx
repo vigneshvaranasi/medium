@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { formatDate } from '../utils/dateFormat'
 
 interface BlogCardProps {
   id: string
@@ -46,7 +47,9 @@ function BlogCard ({
           </div>
           <div className={`flex flex-col justify-center`}>
             <p className='text-[#797979] text-sm'>
-              {new Date(publishedDate).toLocaleDateString()}
+              {
+                formatDate(publishedDate)
+              }
             </p>
           </div>
         </div>

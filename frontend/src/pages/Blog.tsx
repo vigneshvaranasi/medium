@@ -2,6 +2,7 @@ import { useBlog } from '../hooks/useBlog'
 import { useParams } from 'react-router-dom'
 import { Avatar } from '../components/BlogCard'
 import Navbar from '../components/Navbar'
+import { formatDate } from '../utils/dateFormat'
 
 function Blog () {
   const { id } = useParams<{ id: string }>()
@@ -34,7 +35,7 @@ function Blog () {
         <div className='notosans mx-auto col-span-12 lg:col-span-8'>
           <h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
           <p className='text-xs text-[#797979] my-2'>
-            Posted on {new Date(blog.publishedDate).toLocaleDateString()}
+            Posted on {formatDate(blog.publishedDate)}
           </p>
           <p className='text-md text-[#6b6b6b] mb-4 text-justify'>{blog.content}</p>
         </div>
