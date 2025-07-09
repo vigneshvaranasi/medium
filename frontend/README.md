@@ -10,7 +10,7 @@
 7. Profile Page -> Done
 8. Local Blog Cache
 9. Add New Blog Page -> Done
-10. Add toast
+10. Add toast -> Done
 11. pagination in Blogs Page
 12. Delete Blog
 13. Author Profile Page

@@ -4,6 +4,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useAuth } from '../hooks/useAuth'
 import mediumLogo from '../assets/mediumLogo.png'
+import toast from 'react-hot-toast'
 
 
 interface LabeledInputProps {
@@ -63,12 +64,15 @@ function Auth ({ type }: AuthProps) {
         console.log('user: ', user);
         localStorage.setItem('jwt', user.token)
         localStorage.setItem('user', JSON.stringify(user))
+        toast.success('Successfully signed in!')
         setUser(user)
         setAuthStatus(true)
         navigate('/blogs')
     }
     catch (e){
         console.error('Error during authentication:', e)
+        toast.error('Invalid credentials, please try again.')
+        setAuthStatus(false)
     }
   }
 

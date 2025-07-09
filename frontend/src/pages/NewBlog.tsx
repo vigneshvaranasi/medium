@@ -4,6 +4,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 function NewBlog () {
   const [blogData,setBlogData] = useState({
@@ -14,6 +15,10 @@ function NewBlog () {
   const navigate = useNavigate()
 
   const handlePublish = async () => {
+    if(!blogData.title || !blogData.content) {
+      toast.error('Title and content cannot be empty!')
+      return
+    }
     try {
       const response = await axios.post(`${BACKEND_URL}/blog`,{
         title: blogData.title,
@@ -24,6 +29,7 @@ function NewBlog () {
         }
       })
       console.log('response: ', response);
+      toast.success('Blog published successfully!')
       navigate(`/blog/${response.data.post.id}`)
     } catch (error) {
       console.error('Error publishing blog:', error)
