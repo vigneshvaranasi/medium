@@ -112,12 +112,43 @@ blogRouter.get('/bulk',async (c)=>{
                     id:true
                 }
             }
+        },
+        orderBy:{
+            publishedDate:'desc'
         }
     })
     // console.log('posts: ', posts);
     return c.json({
         message: 'Posts fetched successfully',
         posts: posts
+    })
+})
+
+blogRouter.delete('/id/:id',async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate())
+
+    const id = c.req.param('id')
+    if(!id){
+        return c.json({ error: 'Post ID is required' }, 400)
+    }
+    const postExists = await prisma.post.findUnique({
+        where: {
+            id: id,
+            authorId: c.get('userId')
+        }
+    })
+    if (!postExists) {
+        return c.json({ error: 'Post not found or you are not the author' }, 404)
+    }
+    const post = await prisma.post.delete({
+        where:{
+            id: id
+        }
+    })
+    return c.json({
+        message: 'Post deleted successfully'
     })
 })
 

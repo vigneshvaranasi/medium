@@ -136,6 +136,9 @@ userRouter.get('/profile',authMiddleware ,async (c)=>{
     }).$extends(withAccelerate())
     const {id} = c.req.query()
     // console.log('id: ', id);
+    if(!id){
+        return c.json({ error: 'User ID is required' }, 400)
+    }
 
     try {
         const user = await prisma.user.findUnique({
@@ -143,12 +146,22 @@ userRouter.get('/profile',authMiddleware ,async (c)=>{
                 id: id
             },
             include: {
-                posts: true
-            }
+                posts:true
+            },
         })
         if (!user) {
             return c.json({ error: 'User not found' })
         }
+
+        const posts = await prisma.post.findMany({
+            where:{
+                authorId:user.id
+            },
+            orderBy:{
+                publishedDate: 'desc'
+            }
+        })
+
         return c.json({
             message: 'User profile fetched successfully',
             user: {
@@ -156,7 +169,7 @@ userRouter.get('/profile',authMiddleware ,async (c)=>{
                 name: user.name,
                 email: user.email,
                 avatarLetter: user.name.charAt(0).toUpperCase(),
-                blogs: user.posts
+                blogs: posts || []
             }
         })
     } catch (error) {
