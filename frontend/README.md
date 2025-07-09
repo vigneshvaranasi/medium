@@ -7,8 +7,10 @@
 4. Make Date Display in specific Format -> Done
 5. Make Avatar More Proper -> Done
 6. Add Skeleton -> Done
-7. Profile Page
+7. Profile Page -> Done
 8. Local Blog Cache
 9. Add New Blog Page -> Done
 10. Add toast
 11. pagination in Blogs Page
+12. Delete Blog
+13. Author Profile Page

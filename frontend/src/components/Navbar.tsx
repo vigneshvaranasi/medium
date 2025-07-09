@@ -27,7 +27,9 @@ function Navbar ({ onPublish }: { onPublish?: () => void }) {
               <Link to={'/blogs'}>Blogs</Link>
             </div>
           )}
+          <Link to={'/profile'}>
           <Avatar authorName={user.name} />
+          </Link>
         </div>
       )}
     </div>

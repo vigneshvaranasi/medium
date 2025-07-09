@@ -6,6 +6,7 @@ import Blogs from './pages/Blogs'
 import NewBlog from './pages/NewBlog'
 import Home from './pages/Home'
 import ProtectedRoute from './router/ProtectedRoute'
+import Profile from './pages/Profile'
 
 function App () {
   return (
@@ -36,6 +37,14 @@ function App () {
           element={
             <ProtectedRoute>
               <Blog />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <Profile/>
             </ProtectedRoute>
           }
         />

@@ -131,4 +131,44 @@ userRouter.get('/verify',async (c)=>{
     }
 
 })
+
+
+userRouter.get('/profile',async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate())
+
+    const token = c.req.header('Authorization')?.replace('Bearer ', '')
+    if (!token) {
+        return c.json({ error: 'Token is required' })
+    }
+
+    try {
+        const decoded = await verify(token, c.env.JWT_SECRET)
+        const user = await prisma.user.findUnique({
+            where: {
+                id: (decoded as { id: string }).id
+            },
+            include: {
+                posts: true
+            }
+        })
+        if (!user) {
+            return c.json({ error: 'User not found' })
+        }
+        return c.json({
+            message: 'User profile fetched successfully',
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                avatarLetter: user.name.charAt(0).toUpperCase(),
+                blogs: user.posts
+            }
+        })
+    } catch (error) {
+        return c.json({ error: 'Invalid token' })
+    }
+})
+
 export default userRouter
