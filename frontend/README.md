@@ -13,5 +13,5 @@
 10. Add toast -> Done
 11. pagination in Blogs Page
 12. Delete Blog
-13. Author Profile Page
-14. Handle Logout
+13. Author Profile Page -> Done
+14. Handle Logout -> Done

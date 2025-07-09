@@ -9,6 +9,9 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
         Authenticating...
     </div>
   }
+  if (!authStatus && location.pathname === '/') {
+    return children
+  }
   if (!authStatus) {
     return <Navigate to='/signin' />
   }

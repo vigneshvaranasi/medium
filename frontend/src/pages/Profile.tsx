@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { formatDate } from '../utils/dateFormat'
 import { useParams } from 'react-router-dom'
 
@@ -24,9 +24,10 @@ interface UserInfo {
 }
 
 function Profile () {
-  const { user } = useAuth()
+  const { user,setUser,setAuthStatus } = useAuth()
   const [userInfo, setUserInfo] = useState<UserInfo>()
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -64,25 +65,35 @@ function Profile () {
           <h1 className='text-2xl font-bold mt-4'>{userInfo.name}</h1>
           <p className='text-gray-600'>{userInfo.email}</p>
         </div>
+        {userInfo.id === user?.id && (
+          <div className='mt-4'>
+            <button
+              onClick={() => {
+                navigate('/')
+                localStorage.removeItem('user')
+                localStorage.removeItem('jwt')
+                setUser(null)
+                setAuthStatus(false)
+              }}
+              className='px-3 py-1 bg-gray-400 rounded-lg'
+            >
+              Logout
+            </button>
+          </div>
+        )}
 
         <div className='mt-10 w-full max-w-4xl px-4'>
           <h2 className='text-xl font-bold mb-4'>My Blogs</h2>
           {userInfo.blogs && userInfo.blogs.length > 0 ? (
             userInfo.blogs.map(blog => (
-              <Link
-                to={`/blog/${blog.id}`}
-                key={blog.id}
-              >
+              <Link to={`/blog/${blog.id}`} key={blog.id}>
                 <div key={blog.id} className='border-b border-gray-200 py-4'>
                   <h3 className='text-lg font-semibold'>{blog.title}</h3>
                   <p className='text-gray-600'>
                     {blog.content.slice(0, 100)}...
                   </p>
                   <p className='text-sm text-gray-500'>
-                    Published on{' '}
-                    {
-                        formatDate(blog.publishedDate)
-                    }
+                    Published on {formatDate(blog.publishedDate)}
                   </p>
                 </div>
               </Link>
