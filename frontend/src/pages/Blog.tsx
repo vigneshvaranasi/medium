@@ -42,6 +42,7 @@ function Blog () {
     )
   }
   const { loading, blog } = useBlog(id)
+  console.log('blog: ', blog)
   if (loading) {
     return <BlogSkeleton />
   }
@@ -53,6 +54,8 @@ function Blog () {
       </div>
     )
   }
+
+  const paragraphs = blog.content.split(/\n+/)
   return (
     <div>
       <Navbar />
@@ -62,9 +65,14 @@ function Blog () {
           <p className='text-xs text-[#797979] my-2'>
             Posted on {formatDate(blog.publishedDate)}
           </p>
-          <p className='text-md text-[#6b6b6b] mb-4 text-justify'>
-            {blog.content}
-          </p>
+          {paragraphs.map((para, idx) => (
+            <p
+              key={idx}
+              className='text-md text-[#6b6b6b] mb-4 text-justify whitespace-pre-wrap'
+            >
+              {para}
+            </p>
+          ))}
         </div>
         <div className='col-span-12 mb-4 lg:col-span-4'>
           <p className='text-md font-semibold mb-1 text-[#0f0f0f]'>Author</p>

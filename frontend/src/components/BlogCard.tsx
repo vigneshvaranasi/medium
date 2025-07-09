@@ -51,7 +51,7 @@ function BlogCard ({
           {content.slice(0, 100) + '...'}
         </p>
         <p className='text-xs text-[#797979]'>
-          {Math.ceil(content.length / 100)} min read
+          {Math.ceil(content.length / 500)} min read
         </p>
       </div>
     </Link>

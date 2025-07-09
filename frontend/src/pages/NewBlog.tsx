@@ -32,12 +32,12 @@ function NewBlog () {
   return (
     <div>
       <Navbar onPublish={handlePublish}/>
-      <div className='flex justify-center'>
+      <div className='flex justify-center px-2'>
         <div className='max-w-2xl'>
           <textarea
             rows={2}
             placeholder='Title'
-            className='w-full pb-2 text-5xl playfair focus:outline-none focus:ring-0 leading-none mt-6 resize-none'
+            className='w-full pb-2 text-3xl md:text-5xl playfair focus:outline-none focus:ring-0 leading-none mt-6 resize-none'
             style={{
               scrollbarWidth: 'none'
             }}
@@ -48,7 +48,7 @@ function NewBlog () {
             placeholder='Write your content...'
             value={blogData.content}
             onChange={(e) => setBlogData({ ...blogData, content: e.target.value })}
-            className='w-full h-screen text-lg leading-6 playfair focus:outline-none focus:ring-0 resize-none text-justify '
+            className='w-full h-screen text-md md:text-lg leading-6 playfair focus:outline-none focus:ring-0 resize-none text-justify '
           />
         </div>
       </div>

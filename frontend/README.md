@@ -11,3 +11,4 @@
 8. Local Blog Cache
 9. Add New Blog Page -> Done
 10. Add toast
+11. pagination in Blogs Page
