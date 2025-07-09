@@ -7,6 +7,7 @@ interface BlogCardProps {
   title: string
   content: string
   publishedDate: string
+  authorId: string
 }
 
 export function Avatar ({

@@ -8,7 +8,8 @@ export interface Blog {
     title: string
     content: string
     author:{
-        name: string
+        name: string,
+        id: string
     }
     publishedDate: string
 }

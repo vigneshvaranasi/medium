@@ -83,7 +83,8 @@ blogRouter.get('/id/:id',async (c)=>{
             publishedDate: true,
             author:{
                 select:{
-                    name: true
+                    name: true,
+                    id: true
                 }
             }
         }
@@ -107,12 +108,13 @@ blogRouter.get('/bulk',async (c)=>{
             publishedDate:true,
             author:{
                 select:{
-                    name:true
+                    name:true,
+                    id:true
                 }
             }
         }
     })
-    console.log('posts: ', posts);
+    // console.log('posts: ', posts);
     return c.json({
         message: 'Posts fetched successfully',
         posts: posts

@@ -7,6 +7,7 @@ export const authMiddleware: MiddlewareHandler<{
   },
   Variables: {
     userId: string
+    token: string
   }
 }> = async (c, next) => {
     const header = c.req.header('Authorization')
@@ -21,6 +22,7 @@ export const authMiddleware: MiddlewareHandler<{
         }
         console.log('payload: ', payload);
         c.set('userId', String(payload.id))
+        c.set('token', token)
         await next()
     } catch (e) {
         return c.json({ error: 'Unauthorized: Invalid token' }, 401)

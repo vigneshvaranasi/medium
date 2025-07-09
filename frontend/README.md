@@ -14,3 +14,4 @@
 11. pagination in Blogs Page
 12. Delete Blog
 13. Author Profile Page
+14. Handle Logout

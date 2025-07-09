@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import bcrypt from 'bcryptjs'
 import { jwt, sign,verify } from 'hono/jwt'
+import { authMiddleware } from '../middleware/authMiddleWare'
+import { auth } from 'hono/utils/basic-auth'
 const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string
@@ -96,21 +98,17 @@ userRouter.post('/signin', async c => {
     })
 })
 
-userRouter.get('/verify',async (c)=>{
+userRouter.get('/verify',authMiddleware,async (c)=>{
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate())
-
-    const token = c.req.query('token')
-    if (!token) {
-        return c.json({ error: 'Token is required' })
-    }
-
+    const id = c.get('userId')
+    const token = c.get('token')
+    console.log('id: ', id);
     try {
-        const decoded = await verify(token, c.env.JWT_SECRET)
         const user = await prisma.user.findUnique({
             where: {
-                id: (decoded as { id: string }).id
+                id: id
             }
         })
         if (!user) {
@@ -132,22 +130,17 @@ userRouter.get('/verify',async (c)=>{
 
 })
 
-
-userRouter.get('/profile',async (c)=>{
+userRouter.get('/profile',authMiddleware ,async (c)=>{
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate())
-
-    const token = c.req.header('Authorization')?.replace('Bearer ', '')
-    if (!token) {
-        return c.json({ error: 'Token is required' })
-    }
+    const {id} = c.req.query()
+    // console.log('id: ', id);
 
     try {
-        const decoded = await verify(token, c.env.JWT_SECRET)
         const user = await prisma.user.findUnique({
             where: {
-                id: (decoded as { id: string }).id
+                id: id
             },
             include: {
                 posts: true

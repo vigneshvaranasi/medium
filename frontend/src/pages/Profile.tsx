@@ -5,6 +5,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { Link } from 'react-router-dom'
 import { formatDate } from '../utils/dateFormat'
+import { useParams } from 'react-router-dom'
 
 interface Blog {
   id: string
@@ -24,20 +25,14 @@ interface UserInfo {
 
 function Profile () {
   const { user } = useAuth()
-  if (!user) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        Loading...
-      </div>
-    )
-  }
   const [userInfo, setUserInfo] = useState<UserInfo>()
+  const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const res = await axios.get(`${BACKEND_URL}/user/profile`, {
+      const res = await axios.get(`${BACKEND_URL}/user/profile?id=${id}`, {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${user?.token}`
         }
       })
       console.log('res: ', res)

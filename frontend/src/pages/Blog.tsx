@@ -1,5 +1,5 @@
 import { useBlog } from '../hooks/useBlog'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Avatar } from '../components/BlogCard'
 import Navbar from '../components/Navbar'
 import { formatDate } from '../utils/dateFormat'
@@ -76,10 +76,14 @@ function Blog () {
         </div>
         <div className='col-span-12 mb-4 lg:col-span-4'>
           <p className='text-md font-semibold mb-1 text-[#0f0f0f]'>Author</p>
-          <div className='flex items-center gap-1'>
-            <Avatar authorName={blog.author.name} />
-            <h1 className='text-lg font-bold'>{blog.author.name}</h1>
-          </div>
+          <Link
+          to={'/profile/' + blog.author.id}
+          >
+            <div className='flex items-center gap-1'>
+              <Avatar authorName={blog.author.name} />
+              <h1 className='text-lg font-bold'>{blog.author.name}</h1>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
