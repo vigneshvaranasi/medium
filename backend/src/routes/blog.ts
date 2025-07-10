@@ -100,6 +100,10 @@ blogRouter.get('/bulk',async (c)=>{
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate())
+    const {page = 1, limit = 5} = c.req.query()
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const offset = (pageNumber - 1) * limitNumber;
     const posts = await prisma.post.findMany({
         select:{
             id:true,
@@ -115,12 +119,21 @@ blogRouter.get('/bulk',async (c)=>{
         },
         orderBy:{
             publishedDate:'desc'
-        }
+        },
+        skip: offset,
+        take: limitNumber
     })
     // console.log('posts: ', posts);
+    const totalPosts = await prisma.post.count();
     return c.json({
         message: 'Posts fetched successfully',
-        posts: posts
+        posts: posts,
+        pagination: {
+            currentPage: pageNumber,
+            totalPages: Math.ceil(totalPosts / limitNumber),
+            totalPosts: totalPosts,
+            hasMore: offset + limitNumber < totalPosts
+        }
     })
 })
 

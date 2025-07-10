@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import BlogCard from '../components/BlogCard'
 import Navbar from '../components/Navbar'
 import { useBlogs } from '../hooks/useBlogs'
@@ -26,8 +27,33 @@ function BlogCardSkeleton () {
 }
 
 function Blogs () {
-  const { loading, blogs } = useBlogs()
-  if (loading) {
+  const {  initialLoading, loadingMore, blogs, hasMore, loadMoreBlogs } = useBlogs()
+
+  useEffect(() => {
+    const debounce = (func: (...args: any[]) => void, delay: number) => {
+      let timeout: ReturnType<typeof setTimeout> | undefined = undefined
+      return (...args: any[]) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => func(...args), delay)
+      }
+    }
+
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 100
+      ) {
+        loadMoreBlogs()
+      }
+    }
+
+    const debouncedHandleScroll = debounce(handleScroll, 200)
+    window.addEventListener('scroll', debouncedHandleScroll)
+    return () => window.removeEventListener('scroll', debouncedHandleScroll)
+  }, [loadMoreBlogs])
+
+
+  if (initialLoading) {
     return (
       <div>
         <Navbar />
@@ -38,6 +64,8 @@ function Blogs () {
       </div>
     )
   }
+
+
   return (
     <div>
       <Navbar />
@@ -54,6 +82,19 @@ function Blogs () {
               publishedDate={blog.publishedDate}
             />
           ))}
+          {loadingMore && 
+          <div>
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+          </div>
+          }
+          {!hasMore && (
+            <div className='text-center text-gray-500 my-4'>
+              No more blogs to load
+            </div>
+          )}
         </div>
       </div>
     </div>
