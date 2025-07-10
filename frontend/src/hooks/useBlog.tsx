@@ -18,6 +18,6 @@ export const useBlog = (id:string)=>{
             setBlog(response.data.post)
             setLoading(false)
         })
-    },[id])
+    },[id, user?.token])
     return { loading, blog }
 }

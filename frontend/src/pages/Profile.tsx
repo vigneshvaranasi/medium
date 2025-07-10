@@ -37,7 +37,7 @@ function Profile () {
           Authorization: `Bearer ${user?.token}`
         }
       })
-      console.log('res: ', res)
+      // console.log('res: ', res)
       if (res.data.user) {
         setUserInfo(res.data.user)
       } else {
@@ -45,7 +45,7 @@ function Profile () {
       }
     }
     fetchUserInfo()
-  }, [])
+  }, [id, user?.token])
 
   async function handleDeletePost (postId: string) {
     const res = await axios.delete(`${BACKEND_URL}/blog/id/${postId}`, {

@@ -29,28 +29,32 @@ function BlogCardSkeleton () {
 function Blogs () {
   const {  initialLoading, loadingMore, blogs, hasMore, loadMoreBlogs } = useBlogs()
 
-  useEffect(() => {
-    const debounce = (func: (...args: any[]) => void, delay: number) => {
-      let timeout: ReturnType<typeof setTimeout> | undefined = undefined
-      return (...args: any[]) => {
-        clearTimeout(timeout)
-        timeout = setTimeout(() => func(...args), delay)
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollPosition = window.innerHeight + window.scrollY
+    const fullHeight = document.body.offsetHeight
+
+    if (scrollPosition >= fullHeight - 100) {
+      loadMoreBlogs()
+    }
+  }
+
+  const throttle = (func: (...args: any[]) => void, limit: number) => {
+    let inThrottle: boolean
+    return function (...args: any[]) {
+      if (!inThrottle) {
+        func(...args)
+        inThrottle = true
+        setTimeout(() => (inThrottle = false), limit)
       }
     }
+  }
 
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100
-      ) {
-        loadMoreBlogs()
-      }
-    }
+  const throttledHandleScroll = throttle(handleScroll, 50)
+  window.addEventListener('scroll', throttledHandleScroll)
+  return () => window.removeEventListener('scroll', throttledHandleScroll)
+}, [loadMoreBlogs])
 
-    const debouncedHandleScroll = debounce(handleScroll, 200)
-    window.addEventListener('scroll', debouncedHandleScroll)
-    return () => window.removeEventListener('scroll', debouncedHandleScroll)
-  }, [loadMoreBlogs])
 
 
   if (initialLoading) {
