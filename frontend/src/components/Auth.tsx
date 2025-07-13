@@ -3,7 +3,6 @@ import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useAuth } from '../hooks/useAuth'
-import mediumLogo from '../assets/mediumLogo.png'
 import toast from 'react-hot-toast'
 
 
@@ -79,7 +78,7 @@ function Auth ({ type }: AuthProps) {
   return (
     <div className='h-screen flex justify-center flex-col'>
       <Link to={'/'} className='w-max flex mx-auto mb-10'>
-        <img src={mediumLogo} alt='medium-logo' className='w-34' />
+        <h1 className='playpen-sans-hebrew text-4xl font-medium'>Storyit</h1>
       </Link>
       <div className='flex justify-center flex-col'>
         <div className='text-center px-10'>

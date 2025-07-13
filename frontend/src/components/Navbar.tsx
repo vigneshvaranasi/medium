@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom'
-import mediumLogo from '../assets/mediumLogo.png'
 import { Avatar } from './BlogCard'
 import { useAuth } from '../hooks/useAuth'
 function Navbar ({ onPublish }: { onPublish?: () => void }) {
@@ -9,7 +8,7 @@ function Navbar ({ onPublish }: { onPublish?: () => void }) {
   return (
     <div className='flex justify-between items-center py-4 px-6 lg:px-10 border-b-2 border-[#dfdfdf]'>
       <Link to={'/'}>
-        <img src={mediumLogo} alt='medium-logo' className='w-30' />
+        <h1 className='playpen-sans-hebrew text-2xl font-medium'>Storyit</h1>
       </Link>
       {authStatus && user && (
         <div className='flex items-center gap-4 text-black'>

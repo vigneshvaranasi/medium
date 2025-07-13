@@ -1,12 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "medium-backend",
+  "name": "storyit-backend",
   "main": "src/index.ts",
   "compatibility_date": "2025-06-30",
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
-  "vars": {
+"vars": {
       "DATABASE_URL":"",
       "JWT_SECRET":""
   },
